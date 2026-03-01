@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 # PAGE CONFIG
 st.set_page_config(
     page_title="Cinematic AI Recommender",
+     page_icon="🎬",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -349,3 +350,4 @@ if generate:
 
     confidence_score = avg_score / 5 * 100
     st.write(f"🎯 Personalization Confidence: {confidence_score:.2f}%")
+
