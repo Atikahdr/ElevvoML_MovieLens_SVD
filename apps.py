@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 # PAGE CONFIG
 st.set_page_config(
     page_title="Cinematic AI Recommender",
-     page_icon="🎬",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -245,13 +244,12 @@ if generate:
     if len(recs) == 0:
         st.warning("No recommendations available.")
     else:
-        st.markdown("## 🎥 Top 5 Picks For You")
-        
-    # --- Slider Container ---
+        st.markdown(f"### 🎥 Top {n_recs} Picks For You")
+
+    # Slider Container
     movie_html = "<div class='movie-slider'>"
 
-    top_5 = recs[:5]
-    for title, score in top_5:
+    for title, score in recs:  
         movie_html += f"""
 <div class='movie-card'>
     <h4>{title}</h4>
@@ -262,8 +260,10 @@ if generate:
     movie_html += "</div>"
 
     st.markdown(movie_html, unsafe_allow_html=True)
-    # TOP 10 
 
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+    # TOP 10 
     st.markdown("### 🎬 Top 10 Full Recommendations")
 
     top_10 = recs[:10]
@@ -305,12 +305,12 @@ if generate:
     </div>
     """, unsafe_allow_html=True)
 
-    # --- Bar Chart ---
-    st.markdown("## 📊 Recommendation Insight")
+    # Bar Chart
+    st.markdown("### 📊 Recommendation Insight")
 
     rec_df = pd.DataFrame(recs, columns=["Title", "Predicted Rating"])
 
-    # Sort descending biar ranking jelas
+    # Sort descending 
     rec_df = rec_df.sort_values("Predicted Rating", ascending=True)
 
     fig = px.bar(
@@ -342,7 +342,7 @@ if generate:
     st.plotly_chart(fig, use_container_width=True)
 
     # Insight
-    st.markdown("## 🧠 AI Insight from Recommendations")
+    st.markdown("### 🧠 AI Insight from Recommendations")
     if avg_score > 4:
         st.success("🔥 Model strongly recommends high-rated movies for this user. User preference pattern is clearly identified.")
     else:
@@ -350,4 +350,3 @@ if generate:
 
     confidence_score = avg_score / 5 * 100
     st.write(f"🎯 Personalization Confidence: {confidence_score:.2f}%")
-
